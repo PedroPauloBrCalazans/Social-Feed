@@ -1,3 +1,4 @@
+import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import styles from "./Post.module.css";
 
@@ -6,12 +7,9 @@ export function Post() {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img
-            className={styles.avatar}
-            src="https://github.com/PedroPauloBrCalazans.png"
-          />
+          <Avatar hasBorder={true} src="https://github.com/maykbrito.png" />
           <div className={styles.authorInfo}>
-            <strong>Paulo Pedro</strong>
+            <strong>Mayk Brito</strong>
             <span>Gerente loja</span>
           </div>
         </div>
@@ -28,7 +26,7 @@ export function Post() {
           fazer revisão geral, Motor e suspensão.
         </p>
         <p>
-          <a href="#">paulo.gerente/guara_df</a>
+          <a href="#">maik.gerente/guara_df</a>
         </p>
         <p>
           <a href="#">#novaoficina</a> <a href="#">#samambaia</a>{" "}
