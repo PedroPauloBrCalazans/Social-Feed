@@ -1,36 +1,50 @@
+import { format, formatDistanceToNow } from "date-fns";
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import styles from "./Post.module.css";
+import { ptBR } from "date-fns/locale";
 
-export function Post() {
+export function Post({ author, content, publishedAt }) {
+  const dateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR,
+  });
+
+  const datePublicadaRelativa = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar hasBorder={true} src="https://github.com/maykbrito.png" />
+          <Avatar hasBorder={true} src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Mayk Brito</strong>
-            <span>Gerente loja</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
-        <time title="28 de Junho às 20:00" dateTime="2023-06-28 20:00:30">
-          Publicado há 1h
+        <time title={dateFormatted} dateTime={publishedAt.toISOString()}>
+          {datePublicadaRelativa}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Salve galeraa 👋 </p>
-        <p>
-          Acabei de subir mais um carro para a oficina da Samambaia-Sul. Para
-          fazer revisão geral, Motor e suspensão.
-        </p>
-        <p>
-          <a href="#">maik.gerente/guara_df</a>
-        </p>
+        {content.map((line) => {
+          if (line.type === "paragraph") {
+            return <p>{line.content}</p>;
+          } else if (line.type === "link") {
+            return (
+              <p>
+                <a href="#">{line.content}</a>
+              </p>
+            );
+          }
+        })}
         <p>
           <a href="#">#novaoficina</a> <a href="#">#samambaia</a>{" "}
-          <a href="#">#guara</a>
+          <a href="#">#guara</a> <a href="#">#planatina</a>
         </p>
       </div>
 
